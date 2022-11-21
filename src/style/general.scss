@@ -1,0 +1,34 @@
+@use './partials/vars' as *;
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+@import 'node_modules/@fontsource/bebas-neue/400.css';
+
+@import 'node_modules/@fontsource/lato/300.css';
+@import 'node_modules/@fontsource/lato/400.css';
+@import 'node_modules/@fontsource/lato/700.css';
+
+@import 'node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+
+@import 'node_modules/flag-icons/css/flag-icons.min.css';
+
+
+.f1 {
+  font-family: $primary-font;
+}
+
+.f2 {
+  font-family: $secondary-font;
+}
+
+.f2.w300 {
+  font-weight: 300;
+}
+
+.f2.w400 {
+  font-weight: 400;
+}
+
+.f2.w700 {
+  font-weight: 700;
+}
