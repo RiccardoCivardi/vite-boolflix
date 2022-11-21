@@ -4,9 +4,19 @@ import {store} from './data/store';
 
 import axios from 'axios';
 
+import AppHeader from './components/AppHeader.vue';
+import AppMain from './components/AppMain.vue'
+
 export default {
 
   name: 'App',
+
+  components: {
+
+    AppHeader,
+    AppMain
+
+  },
 
   data(){
     return{
@@ -30,6 +40,10 @@ export default {
       })
       .then(result => {
         console.log(result.data);
+        store.movieList = result.data.results;
+      })
+      .catch(error => {
+        console.log('error')
       })
 
 
@@ -48,6 +62,10 @@ export default {
 </script>
 
 <template>
+
+  <AppHeader @clickSearch="getApi()"/>
+
+  <AppMain/>
   
 </template>
 

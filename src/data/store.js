@@ -6,6 +6,7 @@ export const store = reactive({
   api_key: '852554b25617fadc02e37aa2200d81af',
   query: 'avengers',
   page: '',
-  language: 'it-IT'
+  language: 'it-IT',
+  movieList: []
 
 });

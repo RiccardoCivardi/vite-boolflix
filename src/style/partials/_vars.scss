@@ -1,2 +1,7 @@
 $primary-font: "Bebas Neue", cursive;
-$secondary-font: "Lato", sans-serif; 
+$secondary-font: "Lato", sans-serif;
+
+$primary-color: rgb(20, 20, 20);
+$light-primary-color: ligthen($primary-color, 30%);
+$dark-color: rgb(6, 6, 6);
+$light-color: #ffffff;
