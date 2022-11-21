@@ -23,7 +23,7 @@ export default {
   <header>
     <input
       v-model="store.query" 
-      class="form-control" type="text" placeholder="Cerca">
+      class="form-control" type="text" placeholder="Film, serie Tv, persone ">
     <button
       @click="$emit('clickSearch')"
       class="btn btn-light">Cerca</button>
