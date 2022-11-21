@@ -1,5 +1,6 @@
 <script>
 
+import {store} from '../data/store';
 import flags from '../data/flags';
 
 export default {
@@ -8,6 +9,7 @@ export default {
 
   props: {
 
+    poster_path: String,
     title: String,
     original_title: String,
     original_language: String,
@@ -18,6 +20,7 @@ export default {
   data(){
     return{
 
+      store,
       flags
 
     }
@@ -32,7 +35,7 @@ export default {
 
   <div class="col">
     <div class="card">
-      <!-- <img src="..." class="card-img-top" alt="..."> -->
+      <img :src="`${store.pathImage}${poster_path}`" class="card-img-top" alt="...">
       <div class="card-body">
         <p class="card-text">Titolo: {{title}}</p>
         <p class="card-text">Titolo originale: {{original_title}}</p>
@@ -46,7 +49,10 @@ export default {
           <span 
             v-else>{{original_language}}</span>  
         </p>
-        <p class="card-text">Voto: {{vote_average}}</p>
+        <p class="card-text">Voto: {{vote_average}}
+          <i v-for="i in Math.ceil(vote_average / 2)" :key="i" class="fa-solid fa-star"></i>
+          <i v-for="i in (store.limitStars - Math.ceil(vote_average / 2))" :key="i" class="fa-regular fa-star"></i>
+        </p>
       </div>
     </div>
   </div>

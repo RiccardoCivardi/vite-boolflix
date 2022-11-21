@@ -37,6 +37,7 @@ export default {
       <CardBox
         v-show="movie.media_type === 'movie'" 
         v-for="movie in store.movieTvList" :key="movie.id"
+        :poster_path="movie.poster_path"
         :title="movie.title"
         :original_title="movie.original_title"
         :original_language="movie.original_language"
@@ -51,6 +52,7 @@ export default {
       <CardBox
         v-show="tvShow.media_type === 'tv'" 
         v-for="tvShow in store.movieTvList" :key="tvShow.id"
+        :poster_path="tvShow.poster_path"
         :title="tvShow.name"
         :original_title="tvShow.original_name"
         :original_language="tvShow.original_language"

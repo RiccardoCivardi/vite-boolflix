@@ -10,6 +10,8 @@ export const store = reactive({
   page: '',
   language: 'it-IT',
   include_adult: false,
-  movieTvList: []
+  movieTvList: [],
+  pathImage: 'https://image.tmdb.org/t/p/w500/',
+  limitStars: 5,
 
 });
