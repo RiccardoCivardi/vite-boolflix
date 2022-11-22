@@ -12,6 +12,9 @@
 
 @import 'node_modules/flag-icons/css/flag-icons.min.css';
 
+body{
+  font-family: $main-font;
+}
 
 header {
   background-color: $dark-color;
@@ -21,22 +24,20 @@ main, footer {
   background-color: $primary-color;
 }
 
-.f1 {
-  font-family: $primary-font;
+img {
+  max-width: 100%;
 }
 
-.f2 {
-  font-family: $secondary-font;
+ul {
+  list-style: none;
 }
 
-.f2.w300 {
-  font-weight: 300;
+a {
+  text-decoration: none;
 }
 
-.f2.w400 {
-  font-weight: 400;
+.container-custom {
+  width:90%;
+  margin: 0 auto;
 }
 
-.f2.w700 {
-  font-weight: 700;
-}

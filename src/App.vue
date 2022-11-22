@@ -28,33 +28,47 @@ export default {
 
   methods: {
 
-    getApi(){
+    getApi(type, isPopular){
 
-      axios.get(store.apiUrl, {
-        params:{
-          api_key: store.api_key,
-          query: store.query,
-          page: store.page,
-          language: store.language,
-          include_adult: store.include_adult
-        }
-      })
+      let apiUrl;
+
+      if(isPopular && type === 'movie') apiUrl = store.apiUrlMovieTrend;
+      else if(isPopular && type === 'tv') apiUrl = store.apiUrlTvTrend;
+      else  apiUrl = store.apiUrl + type;
+      
+      axios.get(apiUrl , { params: store.apiParams })
       .then(result => {
-        console.log(result.data);
-        store.movieTvList = result.data.results;
+        store[type] = result.data.results;
+        console.log(store[type]);
       })
       .catch(error => {
         console.log('error')
       })
 
+    },
 
+    startSearch(isPopular = false) {
+
+      store.movie = [];
+      store.tv = [];
+
+      if(store.type === '') {
+        this.getApi('movie', isPopular);
+        this.getApi('tv', isPopular);
+      } else this.getApi(store.type);
+
+    },
+
+    getSearchParams() {
+      if(store.type === '') this.startSearch(true);
+      this.startSearch (false);
     }
 
   },
 
   mounted(){
 
-    this.getApi();
+    this.startSearch(true);
 
   }
 
@@ -64,9 +78,15 @@ export default {
 
 <template>
 
-  <AppHeader @clickSearch="getApi()"/>
+  <AppHeader @search="getSearchParams()"/>
 
-  <AppMain/>
+  <main>
+    
+    <AppMain v-if="store.movie.length" title="Film" type="movie"/>
+
+    <AppMain v-if="store.tv.length" title="Serie Tv" type="tv"/>
+
+  </main>
   
 </template>
 
