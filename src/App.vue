@@ -5,7 +5,8 @@ import {store} from './data/store';
 import axios from 'axios';
 
 import AppHeader from './components/AppHeader.vue';
-import AppMain from './components/AppMain.vue'
+import AppMain from './components/AppMain.vue';
+import AppFooter from './components/AppFooter.vue'
 
 export default {
 
@@ -14,7 +15,8 @@ export default {
   components: {
 
     AppHeader,
-    AppMain
+    AppMain,
+    AppFooter
 
   },
 
@@ -61,8 +63,8 @@ export default {
 
     getSearchParams() {
       if(store.type === '') this.startSearch(true);
-      this.startSearch (false);
-    }
+      this.startSearch ();
+    },
 
   },
 
@@ -87,6 +89,8 @@ export default {
     <AppMain v-if="store.tv.length" title="Serie Tv" type="tv"/>
 
   </main>
+
+  <AppFooter/>
   
 </template>
 

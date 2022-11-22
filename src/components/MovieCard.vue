@@ -39,23 +39,31 @@ export default {
 
   <div class="col mb-4">
     <div class="card-default card h-100 rounded-2">
+
       <div class="h-100 overflow-hidden rounded-2">
+        
         <img v-if="card.poster_path" :src="store.pathImage + card.poster_path"  class="card-img-top" :alt="card.title">
         <img v-else src="../assets/image-not-found.png"  class="card-img-top" :alt="card.title">
         
       </div>
       
-
-      
       <div class="card-zoom card">
+
         <div class="overflow-hidden image-zoom">
+          
           <img v-if="card.backdrop_path" :src="`${store.pathImage}${card.backdrop_path}`" class="card-img-top" :alt="card.title">
           <img v-else src="../assets/no_image.jpeg" class="card-img-top" :alt="card.title">
+
         </div>
+
         <div class="card-body">
+          
           <h6 class="">{{card.title || card.name}}</h6>
+
           <p class="mb-1">Titolo originale: <strong>{{card.original_title || card.original_name}}</strong></p>
-          <p class="mb-1">Uscita: {{getDate(card.release_date || card.first_air_date)}}</p>
+
+          <p v-if="card.release_date || card.first_air_date" class="mb-1">Uscita: {{getDate(card.release_date || card.first_air_date)}}</p>
+
           <p class="mb-1">Lingua: 
             <span 
               v-if="flags.includes(card.original_language)"
@@ -66,11 +74,14 @@ export default {
             <span 
               v-else>{{card.original_language}}</span>  
           </p>
+
           <p class="mb-1">Voto:
             <i v-for="i in Math.ceil(card.vote_average / 2)" :key="i" class="fa-solid fa-star"></i>
             <i v-for="i in (store.limitStars - Math.ceil(card.vote_average / 2))" :key="i" class="fa-regular fa-star"></i>
           </p>
-          <p class="description">{{card.overview}}</p>
+
+          <p class="description mb-0">{{card.overview}}</p>
+          
         </div>
       </div>  
 
@@ -100,6 +111,9 @@ export default {
       height: 50px;
       padding-right: 10px;
       overflow-y: scroll;
+    }
+    i {
+      color: yellow;
     }
   }
 }

@@ -5,6 +5,7 @@ export const store = reactive({
   apiUrl: 'https://api.themoviedb.org/3/search/',
   apiUrlMovieTrend: 'https://api.themoviedb.org/3/trending/movie/day',
   apiUrlTvTrend: 'https://api.themoviedb.org/3/trending/tv/day',
+  apiUrlGenres: 'https://api.themoviedb.org/3/genre/tv/list',
   
   apiParams: {
     api_key: '852554b25617fadc02e37aa2200d81af',
