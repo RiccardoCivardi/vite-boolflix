@@ -20,7 +20,8 @@ export const store = reactive({
   type:'',
 
   pathImage: 'https://image.tmdb.org/t/p/w342/',
-  
+  pathImageNotFound: '../assets/image-not-found.png',
+
   limitStars: 5,
 
 });
