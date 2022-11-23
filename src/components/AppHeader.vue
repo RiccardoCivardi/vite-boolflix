@@ -14,6 +14,20 @@ export default {
       headerMenu,
 
     }
+  },
+
+  computed: {
+
+    genresType(){
+      if(store.type === 'movie'){
+        store.genre = '';
+        return store.movieGenres;
+      } 
+
+      store.genre = '';
+      return store.tvGenres;
+    }
+
   }
 
 }
@@ -57,7 +71,7 @@ export default {
 
         <div class="col-3">
           <input
-            @keydown.enter="$emit('search')"
+            @keyup.enter="$emit('search')" @keypress.enter="store.genre = ''"
             v-model.trim="store.apiParams.query" 
             class="form-control" type="text" placeholder="Film, serie Tv, persone "
           >
@@ -66,6 +80,11 @@ export default {
             <option value="" selected>Tutti</option>
             <option value="movie">Film</option>
             <option value="tv">Serie Tv</option>
+          </select>
+
+          <select v-if="store.type === 'movie' || store.type === 'tv'" v-model="store.genre" @change="$emit('search')">
+            <option value="" selected>Tutti i generi</option>
+            <option v-for="(genre, index) in genresType" :key="index" :value="genre.id">{{genre.name}}</option>
           </select>
 
           <button

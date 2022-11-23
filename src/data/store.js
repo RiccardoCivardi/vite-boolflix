@@ -22,6 +22,7 @@ export const store = reactive({
   tvGenres: [],
 
   type:'',
+  genre:'',
 
   pathImage: 'https://image.tmdb.org/t/p/w342/',
   imageNotFoundBig: 'image-not-found.png',
