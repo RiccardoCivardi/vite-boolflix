@@ -16,8 +16,15 @@ body{
   font-family: $main-font;
   background-image: linear-gradient(
     $dark-color ,
-    $primary-color 8%
+    $primary-color 12%
   );
+  background-repeat: no-repeat;
+  overflow: hidden;
+  
+}
+
+header {
+  height: $header-heigth;
 }
 
 img {

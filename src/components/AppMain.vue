@@ -28,10 +28,6 @@ export default {
       store
 
     }
-  },
-
-  methods: {
-
   }
 
 }
@@ -46,7 +42,7 @@ export default {
 
     <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6">
 
-      <MovieCard v-for="card in store[type]" :key="card.id" :card="card"/> 
+      <MovieCard v-for="card in store[type]" :key="card.id" :card="card" :type="type"/> 
       
     </div>    
 

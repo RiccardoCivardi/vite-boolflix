@@ -25,7 +25,7 @@ export default {
 
 <template>
 
-  <footer class="container-custom">
+  <footer class="container-custom pt-5">
 
     <div class="row">
 

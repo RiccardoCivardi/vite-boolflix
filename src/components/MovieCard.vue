@@ -2,6 +2,7 @@
 
 import {store} from '../data/store';
 import flags from '../data/flags';
+import {getImagePath} from '../data/methods';
 
 export default {
 
@@ -9,7 +10,8 @@ export default {
 
   props: {
 
-    card: Object
+    card: Object,
+    type: String
 
   },
 
@@ -17,16 +19,37 @@ export default {
     return{
 
       store,
-      flags
+      flags,
+      getImagePath
 
     }
   },
 
-  methods: {
+  computed: {
 
-    
-    getDate(date) {
+    formatDate() {
+      const date = this.card.release_date || this.card.first_air_date;
       return date.split('-').reverse().join('/');
+    },
+
+    formatGenres() {
+      let genresString = '';
+      let genresFilter = [];
+
+      if(this.card.media_type = this.type) {
+        let string = this.type + 'Genres'; 
+        genresFilter = store[string];
+      } 
+
+      this.card.genre_ids.forEach(genre => {
+        genresFilter.forEach(gen => {
+          if(gen.id === genre) {
+            genresString += (gen.name + ' ');
+          }
+        })
+      })
+
+      return genresString;
     }
 
   }
@@ -43,7 +66,7 @@ export default {
       <div class="h-100 overflow-hidden rounded-2">
         
         <img v-if="card.poster_path" :src="store.pathImage + card.poster_path"  class="card-img-top" :alt="card.title">
-        <img v-else src="../assets/image-not-found.png"  class="card-img-top" :alt="card.title">
+        <img v-else :src="getImagePath(store.imageNotFoundBig)"  class="card-img-top" :alt="card.title">
         
       </div>
       
@@ -52,7 +75,7 @@ export default {
         <div class="overflow-hidden image-zoom">
           
           <img v-if="card.backdrop_path" :src="`${store.pathImage}${card.backdrop_path}`" class="card-img-top" :alt="card.title">
-          <img v-else src="../assets/no_image.jpeg" class="card-img-top" :alt="card.title">
+          <img v-else :src="getImagePath(store.imageNotFoundSmall)" class="card-img-top" :alt="card.title">
 
         </div>
 
@@ -62,7 +85,9 @@ export default {
 
           <p class="mb-1">Titolo originale: <strong>{{card.original_title || card.original_name}}</strong></p>
 
-          <p v-if="card.release_date || card.first_air_date" class="mb-1">Uscita: {{getDate(card.release_date || card.first_air_date)}}</p>
+          <p class="mb-1">{{formatGenres}}</p>
+
+          <p v-if="card.release_date || card.first_air_date" class="mb-1">Uscita: {{formatDate}}</p>
 
           <p class="mb-1">Lingua: 
             <span 
@@ -80,8 +105,8 @@ export default {
             <i v-for="i in (store.limitStars - Math.ceil(card.vote_average / 2))" :key="i" class="fa-regular fa-star"></i>
           </p>
 
-          <p class="description mb-0">{{card.overview}}</p>
-          
+          <p v-if="card.overview" class="description mb-0">{{card.overview}}</p>
+
         </div>
       </div>  
 
@@ -106,7 +131,7 @@ export default {
     object-position: center;
   }
   .card-body {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     .description {
       height: 50px;
       padding-right: 10px;
@@ -125,7 +150,7 @@ export default {
     top: 0;
     left: 0;
     z-index: 999;
-    transition: all 3s;
+    min-height: 100%;
   }
   &:hover .card-zoom{
     display: block; 
