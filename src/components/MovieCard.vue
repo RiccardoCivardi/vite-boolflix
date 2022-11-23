@@ -32,16 +32,29 @@ export default {
 
     getCast() {
       const apiUrl = store.apiUrlCast + this.card.media_type + '/' + this.card.id + '/credits';
-
+      this.stringCast = ''; 
       axios.get(apiUrl, {
         params: {
           api_key: store.apiParams.api_key
         }
       })
       .then(result => {
-        const cast = result.data.cast;
-        console.log(cast)
-        for(let i = 0; i < 5; i++){
+        let cast = [];
+        let castLimit;
+
+        if(result.data.cast.length){
+          cast = result.data.cast; 
+        } else if(result.data.crew.length) cast = result.data.crew;
+        else {
+          this.stringCast = 'non ci sono informazioni!!!';
+          return;
+        } 
+        // console.log(cast)
+
+        if(cast.length >= 5) castLimit = 5;
+        else castLimit = cast.length;
+      
+        for(let i = 0; i < castLimit; i++){
           this.stringCast += (cast[i].name + ' ');
         }
       })
@@ -84,7 +97,7 @@ export default {
 
 <template>
 
-  <div class="col mb-4">
+  <div class="col mb-1">
     <div class="card-default card h-100 rounded-2" @mouseenter="getCast()">
 
       <div class="h-100 overflow-hidden rounded-2">

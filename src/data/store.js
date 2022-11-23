@@ -33,4 +33,9 @@ export const store = reactive({
 
   limitStars: 5,
 
+  pagination: {
+    movie: 0, 
+    tv: 0
+  }
+
 });

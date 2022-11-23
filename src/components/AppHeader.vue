@@ -66,7 +66,7 @@ export default {
         <div class="col-5 d-flex flex-wrap
         ">
           <input
-            @keyup.enter="$emit('search')" @keypress.enter="store.genre = ''"
+            @keyup.enter="store.apiParams.page = 1; store.genre = ''; $emit('search')" 
             v-model.trim="store.apiParams.query" 
             class="form-control me-1 w-75" type="text" placeholder="Film, serie Tv..."
           >
@@ -75,13 +75,14 @@ export default {
           
           <div class="w-75">
 
-            <select v-model="store.type" @change="$emit('search')" class="me-1">
+            <select v-model="store.type" @change="store.apiParams.page = 1; $emit('search')" class="me-1">
               <option value="" selected>Tutti</option>
               <option value="movie">Film</option>
               <option value="tv">Serie Tv</option>
             </select>
   
-            <select v-if="store.type === 'movie' || store.type === 'tv'" v-model="store.genre" @change="$emit('search')" class="me-1">
+            <select v-if="store.type === 'movie' || store.type === 'tv'" 
+            v-model="store.genre" @change="store.apiParams.page = 1; $emit('search')" class="me-1">
               <option value="" selected>Tutti i generi</option>
               <option v-for="(genre, index) in genresType" :key="index" :value="genre.id">{{genre.name}}</option>
             </select>

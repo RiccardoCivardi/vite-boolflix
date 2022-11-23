@@ -56,7 +56,7 @@ export default {
       .then(result => {
         store[type] = result.data.results;
         store.isLoaded = true;
-        // console.log(store[type]);
+        store.pagination[type] = result.data.total_pages;
       })
       .catch(error => {
         console.log('error')
@@ -126,11 +126,11 @@ export default {
 
     <main v-if="store.isLoaded" class="mb-5 pt-5">
       
-      <AppMain v-if="store.movie.length" :title="titleFilm" type="movie"/>
+      <AppMain @search="getSearchParams()" v-if="store.movie.length" :title="titleFilm" type="movie"/>
 
       <p class="search" v-if="!store.movie.length && store.type === 'movie'"> Non ci sono Film </p>
   
-      <AppMain v-if="store.tv.length" :title="titleTv" type="tv"/>
+      <AppMain @search="getSearchParams()" v-if="store.tv.length" :title="titleTv" type="tv"/>
 
       <p class="search" v-if="!store.tv.length && store.type === 'tv'"> Non ci sono serie Tv </p>
   
