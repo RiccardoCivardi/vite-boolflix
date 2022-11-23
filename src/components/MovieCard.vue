@@ -4,6 +4,8 @@ import {store} from '../data/store';
 import flags from '../data/flags';
 import {getImagePath} from '../data/methods';
 
+import axios from 'axios';
+
 export default {
 
   name: 'MovieCard',
@@ -20,9 +22,31 @@ export default {
 
       store,
       flags,
-      getImagePath
+      getImagePath,
+      stringCast: ''
 
     }
+  },
+
+  methods: {
+
+    getCast() {
+      const apiUrl = store.apiUrlCast + this.card.media_type + '/' + this.card.id + '/credits';
+
+      axios.get(apiUrl, {
+        params: {
+          api_key: store.apiParams.api_key
+        }
+      })
+      .then(result => {
+        const cast = result.data.cast;
+        console.log(cast)
+        for(let i = 0; i < 5; i++){
+          this.stringCast += (cast[i].name + ' ');
+        }
+      })
+    }
+
   },
 
   computed: {
@@ -61,7 +85,7 @@ export default {
 <template>
 
   <div class="col mb-4">
-    <div class="card-default card h-100 rounded-2">
+    <div class="card-default card h-100 rounded-2" @mouseenter="getCast()">
 
       <div class="h-100 overflow-hidden rounded-2">
         
@@ -70,7 +94,7 @@ export default {
         
       </div>
       
-      <div class="card-zoom card">
+      <div class="card-zoom card h-100">
 
         <div class="overflow-hidden image-zoom">
           
@@ -105,6 +129,8 @@ export default {
             <i v-for="i in (store.limitStars - Math.ceil(card.vote_average / 2))" :key="i" class="fa-regular fa-star"></i>
           </p>
 
+          <p class="mb-1 cast">Cast: <em>{{stringCast}}</em></p>
+
           <p v-if="card.overview" class="description mb-0">{{card.overview}}</p>
 
         </div>
@@ -133,7 +159,7 @@ export default {
   .card-body {
     font-size: 0.6rem;
     .description {
-      height: 50px;
+      height: 100px;
       padding-right: 10px;
       overflow-y: scroll;
     }
@@ -141,6 +167,7 @@ export default {
       color: yellow;
     }
   }
+
 }
 .card-default{
   position: relative;
@@ -150,7 +177,7 @@ export default {
     top: 0;
     left: 0;
     z-index: 999;
-    min-height: 100%;
+    overflow: scroll;
   }
   &:hover .card-zoom{
     display: block; 

@@ -11,7 +11,7 @@ export default {
     return{
 
       store,
-      headerMenu,
+      headerMenu
 
     }
   },
@@ -46,59 +46,51 @@ export default {
           <img src="/logo-boolflix.png" alt="Logo Boolflix">
         </div>
 
-        <div class="col-8 p-0 ps-4">
+        <div class="col-6 p-0 ps-4 d-flex ">
 
-
-          <div class="dropdown d-md-none">
+          <div class="dropdown d-lg-none h-100 d-flex align-items-center">
             <span class="browse dropdown-toggle">Sfoglia</span>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </div>
-
-          <!-- <span class="browse d-md-none dropdown-toggle">Sfoglia</span> -->
           
-          <ul class="d-flex p-0 d-none d-md-flex">
+          <ul class="d-flex p-0 d-none d-lg-flex h-100 d-flex align-items-center">
             <li
               v-for="(link, index) in headerMenu" :key="index"
-              class="ps-3"
+              class="ps-2"
             ><a href="link.href" :class="{'active': link.active}">{{link.text}}</a></li>
           </ul>
 
         </div>
 
-        <div class="col-3">
+        <div class="col-5 d-flex flex-wrap
+        ">
           <input
             @keyup.enter="$emit('search')" @keypress.enter="store.genre = ''"
             v-model.trim="store.apiParams.query" 
-            class="form-control" type="text" placeholder="Film, serie Tv, persone "
+            class="form-control me-1 w-75" type="text" placeholder="Film, serie Tv..."
           >
+
+          <button @click="$emit('search')" class="btn btn-light w-auto me-1">Cerca</button>
           
-          <select v-model="store.type" @change="$emit('search')">
-            <option value="" selected>Tutti</option>
-            <option value="movie">Film</option>
-            <option value="tv">Serie Tv</option>
-          </select>
+          <div class="w-75">
 
-          <select v-if="store.type === 'movie' || store.type === 'tv'" v-model="store.genre" @change="$emit('search')">
-            <option value="" selected>Tutti i generi</option>
-            <option v-for="(genre, index) in genresType" :key="index" :value="genre.id">{{genre.name}}</option>
-          </select>
+            <select v-model="store.type" @change="$emit('search')" class="me-1">
+              <option value="" selected>Tutti</option>
+              <option value="movie">Film</option>
+              <option value="tv">Serie Tv</option>
+            </select>
+  
+            <select v-if="store.type === 'movie' || store.type === 'tv'" v-model="store.genre" @change="$emit('search')" class="me-1">
+              <option value="" selected>Tutti i generi</option>
+              <option v-for="(genre, index) in genresType" :key="index" :value="genre.id">{{genre.name}}</option>
+            </select>
 
-          <button
-            @click="$emit('search')"
-            class="btn btn-light">Cerca</button>
+          </div>
+
         </div>
 
-
       </div>
-
-      
-
-      
-
 
     </div>
     
@@ -111,15 +103,14 @@ export default {
 @use '../style/partials/vars' as *;
 
 header{
+ 
+  img{
+    object-fit: contain;
+  }
   .browse {
     font-size: 0.8rem;
     color: $light-color;
     font-weight: 400;
-    // &::after{
-    //   content: '\f0d7';
-    //   font-family: 'Font Awesome 6 free';
-    //   font-weight: bold;
-    // }
   }
   a{
     color: $light-color;
@@ -132,6 +123,12 @@ header{
       font-weight: 400;
     }
 
+  }
+  select, input, button {
+    height: 20px;
+    padding: 0 5px;
+    font-size: 0.7rem;
+    margin-bottom: 5px;
   }
 }
 

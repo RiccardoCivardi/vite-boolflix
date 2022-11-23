@@ -33,8 +33,8 @@ export default {
   methods: {
 
     getApiGenres(type) {
-      let apiUrl = store.apiUrlGenres + type + '/list';
-      axios.get(apiUrl, { params: store.apiParams })
+      let apiUrlGen = store.apiUrlGenres + type + '/list';
+      axios.get(apiUrlGen, { params: store.apiParams })
       .then(result => {
         if(type === 'movie') store.movieGenres = result.data.genres;
         else store.tvGenres = result.data.genres;
@@ -46,7 +46,7 @@ export default {
 
     getApi(type, isPopular){
 
-      let apiUrl;
+      let apiUrl = '';
 
       if(isPopular && type === 'movie') apiUrl = store.apiUrlMovieTrend;
       else if(isPopular && type === 'tv') apiUrl = store.apiUrlTvTrend;
@@ -97,6 +97,21 @@ export default {
     this.getApiGenres('movie');
     this.getApiGenres('tv');
 
+  },
+
+  computed: {
+
+    titleFilm() {
+      if(store.apiParams.query === '') return 'I migliori film in Italia oggi';
+      return 'Film';
+    },
+
+    titleTv() {
+      if(store.apiParams.query === '') return 'Le migliori serie Tv Italia oggi';
+      return 'Serie Tv';
+    }
+
+
   }
 
 }
@@ -111,13 +126,13 @@ export default {
 
     <main v-if="store.isLoaded" class="mb-5 pt-5">
       
-      <AppMain v-if="store.movie.length" title="Film" type="movie"/>
+      <AppMain v-if="store.movie.length" :title="titleFilm" type="movie"/>
 
-      <h6 v-else class="mb-3">La ricerca NON ha prodotto risultati...</h6>
+      <p class="search" v-if="!store.movie.length && store.type === 'movie'"> Non ci sono Film </p>
   
-      <AppMain v-if="store.tv.length" title="Serie Tv" type="tv"/>
+      <AppMain v-if="store.tv.length" :title="titleTv" type="tv"/>
 
-      <h6 v-else class="mb-3">La ricerca NON ha prodotto risultati...</h6>
+      <p class="search" v-if="!store.tv.length && store.type === 'tv'"> Non ci sono serie Tv </p>
   
     </main>
 
@@ -137,6 +152,15 @@ export default {
 .scroll {
   height: calc(100vh - $header-heigth);
   overflow: scroll;
+}
+
+.search {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: $light-color;
+  height: calc(100vh - $header-heigth);
+  padding-top: 100px;
 }
 
 </style>
