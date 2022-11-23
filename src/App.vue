@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
+import LoaderCss from './components/partials/LoaderCss.vue'
 import AppFooter from './components/AppFooter.vue'
 
 export default {
@@ -16,6 +17,7 @@ export default {
 
     AppHeader,
     AppMain,
+    LoaderCss,
     AppFooter
 
   },
@@ -53,6 +55,7 @@ export default {
       axios.get(apiUrl , { params: store.apiParams })
       .then(result => {
         store[type] = result.data.results;
+        store.isLoaded = true;
         // console.log(store[type]);
       })
       .catch(error => {
@@ -65,6 +68,7 @@ export default {
 
       store.movie = [];
       store.tv = [];
+      store.isLoaded = false; 
 
       if(store.apiParams.query === '' && store.type === '') {
         this.getApi('movie', isPopular);
@@ -105,14 +109,20 @@ export default {
 
   <div class="scroll">
 
-    <main class="mb-5 pt-5">
+    <main v-if="store.isLoaded" class="mb-5 pt-5">
       
       <AppMain v-if="store.movie.length" title="Film" type="movie"/>
+
+      <h6 v-else class="mb-3">La ricerca NON ha prodotto risultati...</h6>
   
       <AppMain v-if="store.tv.length" title="Serie Tv" type="tv"/>
+
+      <h6 v-else class="mb-3">La ricerca NON ha prodotto risultati...</h6>
   
     </main>
-  
+
+    <LoaderCss v-else />
+    
     <AppFooter/>
 
   </div>

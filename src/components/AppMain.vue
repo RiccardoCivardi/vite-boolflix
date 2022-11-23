@@ -38,9 +38,8 @@ export default {
 
       store[this.type] = store[this.type].filter(card => card.genre_ids.includes(store.genre));
 
-      return store[this.type];
+      return store[this.type]; 
       
-
     }
 
   }
@@ -59,7 +58,7 @@ export default {
 
       <MovieCard v-for="card in ListToPrint" :key="card.id" :card="card" :type="type"/> 
       
-    </div>    
+    </div> 
 
   </div>  
   
